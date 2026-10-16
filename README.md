@@ -216,7 +216,7 @@ folder ships with the paper's numbers, so this step runs right after cloning. Th
 tables come from `tools/benchmark_views.py` (GPU, batch size 1) and
 `tools/benchmark_aggregator.py` (CPU, one thread).
 
-The qualitative analysis (the counts of Section 6.6 and Figure 2) needs the rescored
+The qualitative analysis (the counts of Section 6.6 and Figure 3) needs the rescored
 predictions of `run_cell.py` and the exported views:
 
 ```bash

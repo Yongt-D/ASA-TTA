@@ -1,4 +1,4 @@
-"""Qualitative analysis: WBF with the original score against ASA (Section 6.6 and Figure 2).
+"""Qualitative analysis: WBF with the original score against ASA (Section 6.6 and Figure 3).
 
     python tools/qualitative.py stats
     python tools/qualitative.py figure --out figure_qualitative.pdf
@@ -10,7 +10,7 @@ positive if it matches a ground-truth box of its class at IoU >= 0.5, greedily b
 False positives are typed as duplicate (IoU >= 0.5 with an already matched ground truth of
 its class), class (IoU >= 0.5 with a ground truth of another class), localization
 (0.1 <= IoU < 0.5 with its class) or background. ``stats`` writes {results}/qualitative.json;
-``figure`` draws Figure 2: three images with both rules, and two clusters whose ASA box
+``figure`` draws Figure 3: three images with both rules, and two clusters whose ASA box
 crosses IoU 0.75 with the ground truth while the WBF box stays below 0.7 (members, WBF box,
 ASA box and ground truth; the members come from the exported views).
 """
@@ -29,7 +29,7 @@ from asa.views import FAMILIES  # noqa: E402
 
 CELLS = ["fair1m2_yolo11m:d2", "fair1m2_yolo11m:c4", "fair1m2_yolo11m:d4", "fair1m2_yolo11m:ms", "dota_orcnn:ms"]
 RULES = {"wbf": "wbf_orig", "asa": "asa"}
-# (detector, family, image, crop x0, y0, side in pixels, column title) of Figure 2
+# (detector, family, image, crop x0, y0, side in pixels, column title) of Figure 3
 EXAMPLES = [("fair1m2_yolo11m", "c4", "1101", 140, 0, 600, "(a) FAIR1M-2.0, YOLO11m, C4"),
             ("fair1m2_yolo11m", "c4", "6143", 230, 40, 560, "(b) FAIR1M-2.0, YOLO11m, C4"),
             ("dota_orcnn", "ms", "P0411__1024__0___62", 170, 200, 420, "(c) DOTA-v1.0, O-RCNN, MS")]
@@ -119,7 +119,7 @@ def figure(ex, preds, stats, out):
 
     green, verm, yel, sky, pink, white = "#009E73", "#D55E00", "#F0E442", "#56B4E9", "#CC79A7", "#FFFFFF"
     plt.rcParams.update({"font.family": "serif", "font.serif": ["Times New Roman", "Times", "DejaVu Serif"],
-                         "font.size": 7, "pdf.fonttype": 42})
+                         "font.size": 7, "pdf.fonttype": 42, "mathtext.fontset": "stix"})
 
     def px(poly, w, h, x0=0.0, y0=0.0):
         return np.array([[x * w - x0, y * h - y0] for x, y in poly])
@@ -175,7 +175,7 @@ def figure(ex, preds, stats, out):
         ax.add_patch(Polygon(px(c["asa"], w, h), closed=True, fill=False, ec=pink, lw=1.1))
         ax.set_xlim(x0, x0 + 2 * half)
         ax.set_ylim(y0 + 2 * half, y0)
-        label(ax, f"IoU {c['iou_wbf']:.2f} $\\rightarrow$ {c['iou_asa']:.2f}")
+        label(ax, f"IoU {c['iou_wbf']:.2f} → {c['iou_asa']:.2f}")
 
     cands = box_candidates(ex, preds, *ZOOM_CELL)
     fig, axes = plt.subplots(2, 4, figsize=(7.16, 3.72), gridspec_kw=dict(wspace=0.04, hspace=0.06))
