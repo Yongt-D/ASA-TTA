@@ -1,0 +1,11 @@
+# Aggregation, evaluation and tables (CPU only). The paper's numbers were computed with
+# these versions; torch 2.8.0 reproduces them exactly, other versions to the last digits.
+numpy==1.26.4
+torch==2.8.0
+scikit-learn==1.7.2
+pillow==12.2.0
+pyyaml==6.0.3
+# Exporting views, training YOLO11-OBB, preparing DOTA, view latency
+opencv-python
+ultralytics==8.4.53
+# Oriented R-CNN needs MMRotate dev-1.x (Linux); see README.md.

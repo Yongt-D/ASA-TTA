@@ -1,0 +1,14 @@
+__pycache__/
+*.pyc
+# datasets, exported views, caches, rescored predictions, models, generated tables
+data/
+views/
+caches/
+preds/
+models/
+work_dirs/
+tables/
+runs/
+*.pt
+*.pth
+*.npz

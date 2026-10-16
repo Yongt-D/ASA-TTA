@@ -1,0 +1,13 @@
+{
+ "family": "d4",
+ "images": 100,
+ "clusters": 16790,
+ "ms_per_image": {
+  "io": 2.9557049996219575,
+  "wbf": 76.4524550002534,
+  "features": 96.2653000006685,
+  "tensors": 1.4072789996862411,
+  "network": 1.0090000001946464
+ },
+ "detector": "dior_r_yolo11s"
+}

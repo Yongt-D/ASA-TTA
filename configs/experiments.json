@@ -1,0 +1,32 @@
+{
+  "data_root": "data",
+  "views_root": "views",
+  "datasets": {
+    "hrsc": {"name": "HRSC2016-MS", "root": "HRSC2016_MS_yolo_obb", "num_classes": 1, "scene_pattern": null},
+    "dior": {"name": "DIOR-R", "root": "DIOR-R/yolo_obb", "num_classes": 20, "scene_pattern": null},
+    "dota": {"name": "DOTA-v1.0", "root": "dota_yolo_obb_1024", "num_classes": 15, "scene_pattern": "^([^_]+)__"},
+    "fair": {"name": "FAIR1M-2.0", "root": "FAIR1M2_yolo_obb_rgb", "num_classes": 37, "scene_pattern": null}
+  },
+  "development": ["hrsc_yolo11s", "dior_r_yolo11s", "dota_yolo11s", "fair1m2_yolo11s"],
+  "detectors": {
+    "hrsc_yolo11n": {"dataset": "hrsc", "detector": "YOLO11n", "imgsz": 1024, "train": "configs/yolo11/hrsc_yolo11n.yaml"},
+    "hrsc_yolo11s": {"dataset": "hrsc", "detector": "YOLO11s", "imgsz": 1024, "train": "configs/yolo11/hrsc_yolo11s.yaml"},
+    "hrsc_yolo11m": {"dataset": "hrsc", "detector": "YOLO11m", "imgsz": 1024, "train": "configs/yolo11/hrsc_yolo11m.yaml"},
+    "hrsc_yolo11l": {"dataset": "hrsc", "detector": "YOLO11l", "imgsz": 1024, "train": "configs/yolo11/hrsc_yolo11l.yaml"},
+    "hrsc_yolo11x": {"dataset": "hrsc", "detector": "YOLO11x", "imgsz": 1024, "train": "configs/yolo11/hrsc_yolo11x.yaml"},
+    "hrsc_orcnn": {"dataset": "hrsc", "detector": "O-RCNN", "imgsz": 1024, "train": "configs/mmrotate/oriented_rcnn_r50_hrsc2016_ms.py"},
+    "dior_r_yolo11s": {"dataset": "dior", "detector": "YOLO11s", "imgsz": 1024, "train": "configs/yolo11/dior_r_yolo11s.yaml"},
+    "dior_r_yolo11l": {"dataset": "dior", "detector": "YOLO11l", "imgsz": 1024, "train": "configs/yolo11/dior_r_yolo11l.yaml"},
+    "dior_r_orcnn": {"dataset": "dior", "detector": "O-RCNN", "imgsz": 1024, "train": "configs/mmrotate/oriented_rcnn_r50_dior_r.py"},
+    "dota_yolo11n": {"dataset": "dota", "detector": "YOLO11n", "imgsz": 1536, "train": "released: yolo11n-obb.pt"},
+    "dota_yolo11s": {"dataset": "dota", "detector": "YOLO11s", "imgsz": 1536, "train": "released: yolo11s-obb.pt"},
+    "dota_yolo11m": {"dataset": "dota", "detector": "YOLO11m", "imgsz": 1536, "train": "released: yolo11m-obb.pt"},
+    "dota_yolo11l": {"dataset": "dota", "detector": "YOLO11l", "imgsz": 1536, "train": "released: yolo11l-obb.pt"},
+    "dota_yolo11x": {"dataset": "dota", "detector": "YOLO11x", "imgsz": 1536, "train": "released: yolo11x-obb.pt"},
+    "dota_orcnn": {"dataset": "dota", "detector": "O-RCNN", "imgsz": 1024, "train": "configs/mmrotate/oriented_rcnn_r50_dota.py"},
+    "fair1m2_yolo11n": {"dataset": "fair", "detector": "YOLO11n", "imgsz": 1024, "train": "configs/yolo11/fair1m2_yolo11n.yaml"},
+    "fair1m2_yolo11s": {"dataset": "fair", "detector": "YOLO11s", "imgsz": 1024, "train": "configs/yolo11/fair1m2_yolo11s.yaml"},
+    "fair1m2_yolo11m": {"dataset": "fair", "detector": "YOLO11m", "imgsz": 1024, "train": "configs/yolo11/fair1m2_yolo11m.yaml"},
+    "fair1m2_orcnn": {"dataset": "fair", "detector": "O-RCNN", "imgsz": 1024, "train": "configs/mmrotate/oriented_rcnn_r50_fair1m2.py"}
+  }
+}

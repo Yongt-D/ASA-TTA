@@ -1,0 +1,13 @@
+{
+ "family": "d4",
+ "images": 100,
+ "clusters": 13203,
+ "ms_per_image": {
+  "io": 4.017223000410013,
+  "wbf": 50.49265799985733,
+  "features": 78.86111999978311,
+  "tensors": 1.13848099950701,
+  "network": 0.777156000258401
+ },
+ "detector": "dota_yolo11s"
+}
