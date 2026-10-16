@@ -1,4 +1,4 @@
-"""Convert HRSC2016-MS to the YOLO-OBB layout (single class ``ship``).
+"""Convert HRSC2016-MS to the YOLO-OBB layout, all ship categories merged into one class ``ship``.
 
     python tools/convert_hrsc2016_ms.py --root data/HRSC2016_MS/raw --out-root data/HRSC2016_MS_yolo_obb
 

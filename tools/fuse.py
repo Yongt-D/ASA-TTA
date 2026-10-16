@@ -2,10 +2,13 @@
 
     python tools/fuse.py --rule nms softnms --families c4        # Table 8
     python tools/fuse.py --rule wbf_max --families flip          # the Flip family of Table 1
+    python tools/fuse.py --rule wbf_max wbf_mean nms softnms --families c4 --iou-thr 0.45
 
 Writes {preds}/{detector}/{family}/{rule}/ and adds the metrics (percent) to
-{results}/{detector}/{family}.json. WBF for the families d2/c4/d4/ms is also produced by
-tools/run_cell.py from the cluster caches (identical boxes and scores).
+{results}/{detector}/{family}.json; a threshold other than 0.55 is appended to the rule's
+name (wbf_max_t0.45). The last line, with the thresholds 0.45 to 0.65, gives the settings of
+Section 3. WBF for the families d2/c4/d4/ms is also produced by tools/run_cell.py from the
+cluster caches (identical boxes and scores).
 """
 import argparse
 import json
@@ -50,14 +53,15 @@ def main():
             path = Path(a.results) / det / f"{fam}.json"
             res = json.loads(path.read_text()) if path.exists() else {}
             for rule in a.rule:
-                out = Path(a.preds) / det / fam / rule
+                key = rule if abs(a.iou_thr - 0.55) < 1e-9 else f"{rule}_t{a.iou_thr:.2f}"
+                out = Path(a.preds) / det / fam / key
                 with ProcessPoolExecutor(a.workers) as pool:
                     list(pool.map(fuse_image, [(n, dirs, rule, a.iou_thr, a.max_dets, out) for n in names], chunksize=16))
                 r = evaluate(labels, out, ex.num_classes(det), 300, a.workers)
-                res[rule] = {k: 100 * r[k] for k in ("mAP50", "AP75", "mAP50_95")}
+                res[key] = {k: 100 * r[k] for k in ("mAP50", "AP75", "mAP50_95")}
                 path.parent.mkdir(parents=True, exist_ok=True)
                 path.write_text(json.dumps(res, indent=1))
-                print(f"{det} {fam} {rule}: AP50 {res[rule]['mAP50']:.2f} AP75 {res[rule]['AP75']:.2f}", flush=True)
+                print(f"{det} {fam} {key}: AP50 {res[key]['mAP50']:.2f} AP75 {res[key]['AP75']:.2f}", flush=True)
 
 
 if __name__ == "__main__":

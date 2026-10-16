@@ -10,11 +10,12 @@ fusion (WBF) treat every view and every cluster of boxes alike. **Anchored Set A
 
 * the boxes of all views are clustered by rotated WBF (IoU 0.55), as in standard TTA;
 * a small set encoder (DeepSets, about 4.3e4 parameters) reads each cluster's members
-  (view, confidence, rank, IoU and offset relative to the fused box) and a cluster descriptor;
+  (view, confidence, rank, and IoU, offset and shape relative to the fused box) and a cluster
+  descriptor;
 * the **score** is anchored to the original WBF score p0, `s = sigmoid(logit p0 + delta)`,
-  with `delta` zero-initialised and penalised, so the untrained model is exactly WBF;
-* the **box** is a learned weighting of the aligned member vertices,
-  `softmax_i(log c_i + gamma_i)`, again equal to the WBF box before training.
+  with `delta` zero-initialised and penalised, so that the untrained score is exactly p0;
+* the **box** is a learned weighting of the aligned vertices of the eight most confident
+  members, `softmax_i(log c_i + gamma_i)`, which before training is their WBF box.
 
 ASA trains on a CPU (under a minute to under half an hour per detector and family, on eight
 threads), needs no change to the detector and no extra forward passes, and works with any
@@ -39,7 +40,8 @@ tools/          command-line tools (each file starts with its usage)
 configs/        experiments.json (datasets, the 19 detectors, view layout),
                 yolo11/*.yaml (training arguments), mmrotate/*.py (Oriented R-CNN configs)
 splits/         our FAIR1M-2.0 train/val split
-results/        the paper's numbers: per detector and family, bootstrap intervals, latency
+results/        the paper's numbers: per detector and family, bootstrap intervals, latency,
+                qualitative counts
 ```
 
 ## Installation
@@ -106,7 +108,7 @@ All commands run from the repository root. Datasets go to `data/`, exported view
 | HRSC2016-MS | 1 | 603 / 454 | `python tools/convert_hrsc2016_ms.py --root <HRSC2016-MS> --out-root data/HRSC2016_MS_yolo_obb` |
 | DIOR-R | 20 | 5,862 / 5,863 | `python tools/convert_dior_r.py --download-root <archives> --out-root data/DIOR-R/yolo_obb` |
 | DOTA-v1.0 | 15 | 1024-pixel crops, gap 200; 3,066 labelled val crops | `python tools/prepare_dota.py --src-root <DOTA_V1.0> --out-root data/dota_yolo_obb_1024` |
-| FAIR1M-2.0 | 37 | 6,630 / 1,657, split of the official train set | `python tools/convert_fair1m2.py --images <images> --xmls <labelXml> --out-root data/FAIR1M2_yolo_obb_rgb --splits splits` |
+| FAIR1M-2.0 | 37 | 6,630 / 1,657, a random split of the official validation set | `python tools/convert_fair1m2.py --images <images> --xmls <labelXml> --out-root data/FAIR1M2_yolo_obb_rgb --splits splits` |
 
 Each tool's docstring describes the expected input layout. Only images with a label file
 are evaluated.
@@ -189,6 +191,7 @@ the four development detectors, which were also used to choose the settings of A
 | ASA, score only / ASA | `asa_score` / `asa` |
 | Ablations: without the penalty on delta, without the WBF prior, without the member encoder, Gaussian box average | `asa_no_penalty`, `asa_no_prior`, `asa_no_members`, `wbf_orig_gaussbox` |
 | Rotated NMS / Soft-NMS (C4) | `python tools/fuse.py --rule nms softnms --families c4` |
+| C4 under the other fusion settings of Section 3 | `python tools/fuse.py --rule wbf_max wbf_mean nms softnms --families c4 --iou-thr 0.45` (and 0.50, 0.60, 0.65; results keyed `wbf_max_t0.45` etc.) |
 
 ### 5. Statistics, tables and cost
 
@@ -212,6 +215,19 @@ python tools/make_tables.py --out tables
 folder ships with the paper's numbers, so this step runs right after cloning. The cost
 tables come from `tools/benchmark_views.py` (GPU, batch size 1) and
 `tools/benchmark_aggregator.py` (CPU, one thread).
+
+The qualitative analysis (the counts of Section 6.6 and Figure 2) needs the rescored
+predictions of `run_cell.py` and the exported views:
+
+```bash
+python tools/qualitative.py stats
+```
+
+```bash
+python tools/qualitative.py figure --out figure_qualitative.pdf
+```
+
+`results/qualitative.json` holds the paper's counts.
 
 ### Exactness
 

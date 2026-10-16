@@ -1,0 +1,137 @@
+{
+ "fair1m2_yolo11m:d2": {
+  "detector": "fair1m2_yolo11m",
+  "family": "d2",
+  "n_gt": 39378,
+  "thresholds": {
+   "wbf": 0.27029,
+   "asa": 0.31375086
+  },
+  "totals": {
+   "wbf": {
+    "tp": 27751,
+    "fp": 11627,
+    "duplicate": 20,
+    "class": 8287,
+    "localization": 323,
+    "background": 2997
+   },
+   "asa": {
+    "tp": 28540,
+    "fp": 10838,
+    "duplicate": 17,
+    "class": 7898,
+    "localization": 313,
+    "background": 2610
+   }
+  }
+ },
+ "fair1m2_yolo11m:c4": {
+  "detector": "fair1m2_yolo11m",
+  "family": "c4",
+  "n_gt": 39378,
+  "thresholds": {
+   "wbf": 0.22791981,
+   "asa": 0.29622409
+  },
+  "totals": {
+   "wbf": {
+    "tp": 26960,
+    "fp": 12418,
+    "duplicate": 33,
+    "class": 8991,
+    "localization": 365,
+    "background": 3029
+   },
+   "asa": {
+    "tp": 28280,
+    "fp": 11098,
+    "duplicate": 28,
+    "class": 8099,
+    "localization": 329,
+    "background": 2642
+   }
+  }
+ },
+ "fair1m2_yolo11m:d4": {
+  "detector": "fair1m2_yolo11m",
+  "family": "d4",
+  "n_gt": 39378,
+  "thresholds": {
+   "wbf": 0.22557785,
+   "asa": 0.29558313
+  },
+  "totals": {
+   "wbf": {
+    "tp": 27115,
+    "fp": 12263,
+    "duplicate": 26,
+    "class": 8849,
+    "localization": 365,
+    "background": 3023
+   },
+   "asa": {
+    "tp": 28559,
+    "fp": 10819,
+    "duplicate": 22,
+    "class": 7924,
+    "localization": 310,
+    "background": 2563
+   }
+  }
+ },
+ "fair1m2_yolo11m:ms": {
+  "detector": "fair1m2_yolo11m",
+  "family": "ms",
+  "n_gt": 39378,
+  "thresholds": {
+   "wbf": 0.26346438,
+   "asa": 0.31208196
+  },
+  "totals": {
+   "wbf": {
+    "tp": 28007,
+    "fp": 11371,
+    "duplicate": 19,
+    "class": 7926,
+    "localization": 336,
+    "background": 3090
+   },
+   "asa": {
+    "tp": 28405,
+    "fp": 10973,
+    "duplicate": 21,
+    "class": 7956,
+    "localization": 314,
+    "background": 2682
+   }
+  }
+ },
+ "dota_orcnn:ms": {
+  "detector": "dota_orcnn",
+  "family": "ms",
+  "n_gt": 55804,
+  "thresholds": {
+   "wbf": 0.24549769,
+   "asa": 0.25452796
+  },
+  "totals": {
+   "wbf": {
+    "tp": 44622,
+    "fp": 11182,
+    "duplicate": 52,
+    "class": 985,
+    "localization": 1126,
+    "background": 9019
+   },
+   "asa": {
+    "tp": 44927,
+    "fp": 10877,
+    "duplicate": 65,
+    "class": 714,
+    "localization": 1023,
+    "background": 9075
+   }
+  }
+ }
+}

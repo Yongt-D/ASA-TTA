@@ -48,8 +48,10 @@ def cluster_features(box, members, views):
     """The cluster descriptor: 15 base features (column 14 = class) and one presence flag per view.
 
     0 distinct views, 1 their fraction, 2 members, 3-6 max/mean/min/std of the confidences,
-    7 confidence of the r0 member (0 if none), 8 r0 present, 9 WBF max score, 10-11 mean/min
-    IoU of the members with the WBF box, 12 log area, 13 aspect ratio, 14 class.
+    7 highest confidence of an r0 member (0 if none), 8 r0 present, 9 WBF max score (equal to
+    column 3), 10-11 mean/min IoU of the members with the WBF box, 12 log area and 13 aspect
+    ratio of the WBF box in normalised image coordinates (the network takes the log of 13),
+    14 class.
     """
     conf = np.array([m["conf"] for m in members])
     present = {m["view"] for m in members}

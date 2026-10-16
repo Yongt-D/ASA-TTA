@@ -3,10 +3,11 @@
     python tools/convert_fair1m2.py --images data/FAIR1M2_raw/images --xmls data/FAIR1M2_raw/labelXml \
         --out-root data/FAIR1M2_yolo_obb_rgb --splits splits
 
-The official validation labels are not public, so the official training set is split:
-images with at least one box are shuffled with seed 42 and 20% go to validation (6,630
-training and 1,657 validation images). ``--splits`` reads the shipped lists
-``fair1m2_seed42_{train,val}.txt`` instead and checks that every listed image was found.
+``--images`` and ``--xmls`` hold the official FAIR1M-2.0 validation set (8,287 images with
+labels; the labels of the test set are not public). Its images with at least one box are
+shuffled with seed 42 and split 80/20 into our training and evaluation images (6,630 and
+1,657). ``--splits`` reads the shipped lists ``fair1m2_seed42_{train,val}.txt`` instead and
+checks that every listed image was found.
 Corners are clipped to the image and normalised by its size; classes are sorted by name.
 Images are re-encoded as RGB JPEG (Pillow defaults), as the detectors were trained on.
 """
