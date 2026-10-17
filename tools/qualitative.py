@@ -11,8 +11,9 @@ False positives are typed as duplicate (IoU >= 0.5 with an already matched groun
 its class), class (IoU >= 0.5 with a ground truth of another class), localization
 (0.1 <= IoU < 0.5 with its class) or background. ``stats`` writes {results}/qualitative.json;
 ``figure`` draws Figure 3: three images with both rules, and two clusters whose ASA box
-crosses IoU 0.75 with the ground truth while the WBF box stays below 0.7 (members, WBF box,
-ASA box and ground truth; the members come from the exported views).
+crosses IoU 0.75 with the ground truth while the WBF box stays below it (members, WBF box,
+ASA box and ground truth; the members come from the exported views). The IoUs are printed with
+three decimals, so that a WBF box just below 0.75 is not shown as 0.75.
 """
 import argparse
 import json
@@ -175,7 +176,7 @@ def figure(ex, preds, stats, out):
         ax.add_patch(Polygon(px(c["asa"], w, h), closed=True, fill=False, ec=pink, lw=1.1))
         ax.set_xlim(x0, x0 + 2 * half)
         ax.set_ylim(y0 + 2 * half, y0)
-        label(ax, f"IoU {c['iou_wbf']:.2f} → {c['iou_asa']:.2f}")
+        label(ax, f"IoU {c['iou_wbf']:.3f} → {c['iou_asa']:.3f}")
 
     cands = box_candidates(ex, preds, *ZOOM_CELL)
     fig, axes = plt.subplots(2, 4, figsize=(7.16, 3.72), gridspec_kw=dict(wspace=0.04, hspace=0.06))
